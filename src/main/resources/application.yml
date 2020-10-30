@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: mood-sentinel
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8898
+#日志管理
+logging:
+  config: classpath:log/logback-spring.xml

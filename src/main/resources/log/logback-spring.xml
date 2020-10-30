@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <jmxConfigurator />
+    <property name="ABSOLUTE_PATH" value="/data/tomcat/logs/biz/" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} %X{traceId} [%thread] %-5level %logger:%line - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="applicationAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${ABSOLUTE_PATH}/%d{yyyy-MM-dd,aux}/application-%d{yyyy-MM-dd-HH}.log
+            </fileNamePattern>
+            <maxHistory>720</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} %X{traceId} [%thread] %-5level %logger:%line - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <logger name="com.mood" level="INFO" additivity="false">
+<!--        <appender-ref ref="applicationAppender" />-->
+        <appender-ref ref="console" />
+    </logger>
+    <logger name="org" level="INFO" additivity="false">
+        <!--        <appender-ref ref="applicationAppender" />-->
+        <appender-ref ref="console" />
+    </logger>
+
+    <appender name="ASYNC_ROLLING_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="applicationAppender"/>
+    </appender>
+
+
+</configuration>
